@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: circle-test-app
-          image: dockerhub-vpanian/circle-test-app:latest
+          image: vpanian/circle-test-app:latest
           ports:
             - containerPort: 80
               name: http
