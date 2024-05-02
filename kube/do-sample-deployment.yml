@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: do-circle-test-app
+  namespace: default
+  labels:
+    app: do-circle-test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: do-circle-test-app
+  template:
+    metadata:
+      labels:
+        app: do-circle-test-app
+    spec:
+      containers:
+        - name: circle-test-app
+          image: dockerhub-vpanian/circle-test-app:latest
+          ports:
+            - containerPort: 80
+              name: http

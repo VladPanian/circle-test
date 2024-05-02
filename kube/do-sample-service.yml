@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: do-circle-test-app
+  namespace: default
+  labels:
+    app: do-circle-test-app
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      name: http
+  selector:
+    app: do-circle-test-app
