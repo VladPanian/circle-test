@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:bullseye
     environment:
-      IMAGE_NAME: vpanian/do-circle-test-app:latest
+      IMAGE_NAME: vpanian/do-circle-test-app
     working_directory: /tmp/app
     steps:
       - checkout
@@ -12,37 +12,16 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build  $IMAGE_NAME .
-            echo "in docker build"
+            docker build $IMAGE_NAME:latest .
       - run:
           name: Push Docker Image
-          command: 
-            docker push $IMAGE_NAME
-            echo "in docker push"
-  deploy:
-    docker:
-      - image: circleci/buildpack-deps:bullseye
-    working_directory: /tmp/app
-    steps:
-      - checkout
-      - run:
-          name: Install envsubst
           command: |
-            sudo apt-get update && sudo apt-get -y install gettext-base
-      - run:
-          name: Deploy Code
-          command: ./scripts/ci-deploy.sh
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:latest
 workflows:
-  version: 2
   build-deploy-master:
     jobs:
       - build:
-          filters:
-            branches:
-              only: master
-      - deploy:
-          requires:
-            - build
           filters:
             branches:
               only: master
