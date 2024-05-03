@@ -5,15 +5,31 @@ jobs:
   build:
     docker:
       - image: cimg/base:2023.03
+    environment:
+      IMAGE_NAME: vpanian/do-circle-test-app
     steps:
       - checkout
       - run: echo "this is the build job"
+      - run: 
+         name: push docker image
+         command: |
+         docker push $IMAGE_NAME
   test:
     docker:
       - image: cimg/base:2023.03
     steps:
       - checkout
       - run: echo "this is the test job"
+  deploy
+    steps:
+      - run:
+          name: Install envsubst
+          command: |
+            sudo apt-get update && sudo apt-get -y install gettext-base
+      - run:
+          name: Deploy Code
+          command: ./scripts/ci-deploy.sh
+   
 
 # Orchestrate our job run sequence
 workflows:
@@ -21,3 +37,4 @@ workflows:
     jobs:
       - build
       - test
+      - deploy
