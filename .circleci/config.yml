@@ -11,7 +11,7 @@ jobs:
       - run:
           name: pushdockerimage
           command: |
-            docker push vpanian/do-circle-test-app:latest
+            #docker push vpanian/do-circle-test-app:latest
             echo "what an idiot stup"
   test:
     docker:
