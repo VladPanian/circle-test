@@ -21,7 +21,7 @@ jobs:
       - run: echo "this is the test job"
   deploy:
     docker:
-      - image: 'vpanian/do-circle-test-app:lates'
+      - image: 'vpanian/do-circle-test-app:latest'
     steps:
       - checkout
       - run:
