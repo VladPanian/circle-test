@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/buildpack-deps:bullseye
     environment:
-      IMAGE_NAME: vpanian/do-circle-test-app:$CIRCLE_SHA1
+      IMAGE_NAME: vpanian/do-circle-test-app:latest
     working_directory: /tmp/app
     steps:
       - checkout
@@ -12,16 +12,13 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            echo "date: here suppose i build docker image with $CIRCLE_SHA1 "
-            "docker build  $IMAGE_NAME:$CIRCLE_SHA1 ."
-            #"docker build /Users/vladpanian/ITOP-10310/circle/circle-test  -t vpanian/do-circle-test-app"
+            docker build  $IMAGE_NAME .
+            echo "in docker build"
       - run:
           name: Push Docker Image
-          command: |
-            echo "date: here suppose i push docker image with $CIRCLE_SHA1 "
-            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-            #docker tag $IMAGE_NAME:latest $IMAGE_NAME:$CIRCLE_SHA1
-            docker push $IMAGE_NAME:$CIRCLE_SHA1
+          command: 
+            docker push $IMAGE_NAME
+            echo "in docker push"
   deploy:
     docker:
       - image: circleci/buildpack-deps:bullseye
