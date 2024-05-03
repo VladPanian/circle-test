@@ -13,7 +13,7 @@ jobs:
           name: Build Docker image
           command: |
             echo "date: here suppose i build docker image with $CIRCLE_SHA1 "
-            #"docker build  $IMAGE_NAME:$CIRCLE_SHA1 ."
+            "docker build  $IMAGE_NAME:$CIRCLE_SHA1 ."
             #"docker build /Users/vladpanian/ITOP-10310/circle/circle-test  -t vpanian/do-circle-test-app"
       - run:
           name: Push Docker Image
